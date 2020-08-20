@@ -1,0 +1,31 @@
+Grid,Left Image,Right Image, Result, Start Timestamp, End Timestamp
+1,./images/grid_1/1_1.jpg,./images/grid_1/1_5.jpg,left,1597670967299,1597670971604
+1,./images/grid_1/1_2.jpg,./images/grid_1/1_6.jpg,right,1597670971604,1597670973192
+1,./images/grid_1/1_3.jpg,./images/grid_1/1_6.jpg,left,1597670973192,1597670977298
+1,./images/grid_1/1_4.jpg,./images/grid_1/1_6.jpg,right,1597670977299,1597670978940
+1,./images/grid_1/1_3.jpg,./images/grid_1/1_4.jpg,left,1597670978941,1597670979989
+1,./images/grid_1/1_5.jpg,./images/grid_1/1_6.jpg,right,1597670979989,1597670981110
+1,./images/grid_1/1_1.jpg,./images/grid_1/1_6.jpg,right,1597670981111,1597670982522
+1,./images/grid_1/1_4.jpg,./images/grid_1/1_5.jpg,left,1597670982522,1597670983775
+1,./images/grid_1/1_1.jpg,./images/grid_1/1_4.jpg,right,1597670983776,1597670985125
+1,./images/grid_1/1_3.jpg,./images/grid_1/1_5.jpg,left,1597670985125,1597670986457
+1,./images/grid_1/1_1.jpg,./images/grid_1/1_2.jpg,left,1597670986457,1597670989838
+1,./images/grid_1/1_2.jpg,./images/grid_1/1_4.jpg,right,1597670989839,1597670991291
+1,./images/grid_1/1_2.jpg,./images/grid_1/1_3.jpg,right,1597670991292,1597670992026
+1,./images/grid_1/1_2.jpg,./images/grid_1/1_5.jpg,not sure,1597670992026,1597670995857
+1,./images/grid_1/1_1.jpg,./images/grid_1/1_3.jpg,right,1597670995858,1597670997180
+2,./images/grid_2/2_2.jpg,./images/grid_2/2_4.jpg,right,1597670999329,1597671004181
+2,./images/grid_2/2_4.jpg,./images/grid_2/2_5.jpg,left,1597671004181,1597671005624
+2,./images/grid_2/2_1.jpg,./images/grid_2/2_3.jpg,right,1597671005625,1597671006896
+2,./images/grid_2/2_3.jpg,./images/grid_2/2_6.jpg,left,1597671006896,1597671009263
+2,./images/grid_2/2_1.jpg,./images/grid_2/2_5.jpg,not sure,1597671009263,1597671014551
+2,./images/grid_2/2_2.jpg,./images/grid_2/2_5.jpg,left,1597671014552,1597671017299
+2,./images/grid_2/2_2.jpg,./images/grid_2/2_6.jpg,right,1597671017300,1597671022051
+2,./images/grid_2/2_3.jpg,./images/grid_2/2_4.jpg,left,1597671022051,1597671025166
+2,./images/grid_2/2_2.jpg,./images/grid_2/2_3.jpg,right,1597671025166,1597671026601
+2,./images/grid_2/2_5.jpg,./images/grid_2/2_6.jpg,right,1597671026602,1597671027730
+2,./images/grid_2/2_1.jpg,./images/grid_2/2_6.jpg,right,1597671027730,1597671028817
+2,./images/grid_2/2_1.jpg,./images/grid_2/2_4.jpg,right,1597671028818,1597671029694
+2,./images/grid_2/2_1.jpg,./images/grid_2/2_2.jpg,right,1597671029695,1597671030991
+2,./images/grid_2/2_3.jpg,./images/grid_2/2_5.jpg,left,1597671030991,1597671032149
+2,./images/grid_2/2_4.jpg,./images/grid_2/2_6.jpg,left,1597671032150,1597671033896
