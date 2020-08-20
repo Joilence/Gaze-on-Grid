@@ -35,7 +35,7 @@ def generate_IVT_fixation(data, v_th, xn='GazeX', yn='GazeY'):
         try:
             # if [d, v, t] column is added by preprocessing
             v = v = cur['velocity']
-        else:
+        except:
             v = cal_v(cur[xn], cur[yn], nex[xn], nex[yn], nex['time'] - cur['time'])
 
         if v < v_th:
