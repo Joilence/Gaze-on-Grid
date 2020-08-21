@@ -4,7 +4,7 @@ from statistics import mean
 def cal_centroid(x1, y1, x2, y2):
     return [(x1+x2)/2, (y1+y2)/2]
 
-def generate_IVT_fixation(data, v_th, xn='GazeX', yn='GazeY'):
+def generate_IVT_fixation(data, v_th, d_th=0, xn='GazeX', yn='GazeY'):
     """
     Gives fixations from data based on IVT
 
@@ -46,12 +46,14 @@ def generate_IVT_fixation(data, v_th, xn='GazeX', yn='GazeY'):
             # record fixation
             cur_fixation['points'].append(cur)
         if v > v_th and _in_fixation is True:
-            # finish information of fixation
-            cur_fixation['points'].append(cur)
-            cur_fixation['centroid'] = [mean([p[xn] for p in cur_fixation['points']]),
-                                        mean([p[yn] for p in cur_fixation['points']])]
-            cur_fixation['duration'] = cur['time'] - start
-            fixations.append(cur_fixation)
+            duration = cur['time'] - start
+            if duration > d_th:
+                # finish information of fixation
+                cur_fixation['points'].append(cur)
+                cur_fixation['centroid'] = [mean([p[xn] for p in cur_fixation['points']]),
+                                            mean([p[yn] for p in cur_fixation['points']])]
+                cur_fixation['duration'] = duration
+                fixations.append(cur_fixation)
             # reset
             _in_fixation = False
             cur_fixation = {'points': []}
