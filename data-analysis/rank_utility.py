@@ -1,12 +1,12 @@
 import os
 import pandas as pd
 
-def generate_pairwise_rank(pairwise_rank_files):
+def generate_pairwise_rank(data_path, pairwise_rank_files):
     """
     Generate pairwise rank based on preference and decision time
     """
 
-    def one_rank_result(file_path, file_name):
+    def one_rank_result(data_path, file_path, file_name):
         tester = file_name.split("_")[0]
         image_num_per_grid = 6
         preference = []
@@ -69,15 +69,15 @@ def generate_pairwise_rank(pairwise_rank_files):
 
     for file_name in pairwise_rank_files:
         file_path = data_path + "/" + file_name
-        pairwise_rank_result.append(one_rank_result(file_path, file_name))
+        pairwise_rank_result.append(one_rank_result(data_path, file_path, file_name))
 
     df = pd.DataFrame(pairwise_rank_result, columns=["tester", "pwc_grid_1_rank", "pwc_grid_1_2"
                                                     , "pwc_grid_2_rank", "pwc_grid_1_w"])
-    df.to_csv ("./rank_result/pairwise_rank_result.csv", index = False, header=True)
+    df.to_csv ("./rank-result/pairwise_rank_result.csv", index = False, header=True)
 
 
 
-def generate_click_rank(click_rank_files):
+def generate_click_rank(data_path, click_rank_files):
     """
     # Data Example
     # "1" & "2": click ranking result
@@ -119,7 +119,7 @@ def generate_click_rank(click_rank_files):
             click_rank_result.append(tuple([tester, g1_img_rank, g2_img_rank]))
     
     df = pd.DataFrame(click_rank_result, columns=["tester", "click_grid_1_rank", "click_grid_2_rank"])
-    df.to_csv ("./rank_result/click_rank_result.csv", index = False, header=True)
+    df.to_csv ("./rank-result/click_rank_result.csv", index = False, header=True)
 
 
 if __name__ == "__main__":
@@ -127,9 +127,9 @@ if __name__ == "__main__":
 
     # click rank
     click_rank_files = [f for f in os.listdir(data_path) if "click_rank" in f]
-    generate_click_rank(click_rank_files)
+    generate_click_rank(data_path, click_rank_files)
 
     # general rank
     pairwise_rank_files = [f for f in os.listdir(data_path) if "pairwise_rank" in f]
-    generate_pairwise_rank(pairwise_rank_files)
+    generate_pairwise_rank(data_path, pairwise_rank_files)
         
