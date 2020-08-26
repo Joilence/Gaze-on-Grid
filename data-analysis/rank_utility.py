@@ -1,13 +1,83 @@
 import os
 import pandas as pd
 
-def generate_pairwise_rank():
+def generate_pairwise_rank(pairwise_rank_files):
     """
     Generate pairwise rank based on preference and decision time
     """
-    pass
 
-def generate_general_rank(click_rank_files):
+    def one_rank_result(file_path, file_name):
+        tester = file_name.split("_")[0]
+        image_num_per_grid = 6
+        preference = []
+        df = pd.read_csv(file_path)
+        df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('(', '').str.replace(')', '')
+        
+        # get the prefere image and its decision duration
+        for row in df.itertuples():
+            if getattr(row, "result") == "left":
+                prefer_image = getattr(row, "left_image").split("/")[-1]
+            elif getattr(row, "result") == "right":
+                prefer_image = getattr(row, "right_image").split("/")[-1]
+            elif getattr(row, "result") == "not sure":
+                prefer_image = str(getattr(row, "grid")) + "_NS.jpg"
+            elif getattr(row, "result") == "no decision":
+                prefer_image = str(getattr(row, "grid")) + "_ND.jpg"
+
+            duration = getattr(row, "end_timestamp") - getattr(row, "start_timestamp") - 3 # compensation
+
+
+            weight = ((8000-duration)/8000) # asign weight to each prefer image
+            preference.append((getattr(row, "grid"), prefer_image, weight))
+        
+        # one image may have different decsion duration, combine all the decision duration for each image
+        # NS and ND just names, do not have such two images
+        g1_image_name_list = ["1_"+ str(i+1) +".jpg" for i in range(image_num_per_grid)] + ["1_NS.jpg", "1_ND.jpg"] 
+        g2_image_name_list = ["2_"+ str(i+1) +".jpg" for i in range(image_num_per_grid)] + ["2_NS.jpg", "2_ND.jpg"]
+        image_name_list = g1_image_name_list + g2_image_name_list
+
+        preference_pd = pd.DataFrame(preference)
+        preference = []
+        unique_list = preference_pd[1].unique() # prefer image, remove duplicates
+        
+
+        for img in unique_list:
+            img_df = preference_pd[preference_pd[1]== img]
+            preference.append((img_df.iloc[0][0], img, img_df[2].sum())) # (prefer_image, sum_of_weight)
+            if img in image_name_list:
+                image_name_list.remove(img)
+
+        for i in image_name_list:
+            preference.append((int(i.split("_")[0]), i, 0.0)) # images don't belong to prefer image,
+                                                                #(grid, image_name, weight)
+        preference_pd = pd.DataFrame(preference)
+
+        preference = []
+        preference.append(tester)
+        # rank the image according to the weight
+        for g in [1,2]:
+            df_grid = preference_pd[preference_pd[0]== g] # select grid = g
+            df_grid[2] = (df_grid[2]-df_grid[2].min())/(df_grid[2].max()-df_grid[2].min()) # normalization
+            df_grid = df_grid.sort_values(by=2 , ascending=False)
+            preference.append(df_grid.iloc[:, 1].tolist())
+            preference.append(df_grid.iloc[:, 2].tolist())
+        
+        return tuple(preference)
+
+    # -----------------------------
+    pairwise_rank_result = []
+
+    for file_name in pairwise_rank_files:
+        file_path = data_path + "/" + file_name
+        pairwise_rank_result.append(one_rank_result(file_path, file_name))
+
+    df = pd.DataFrame(pairwise_rank_result, columns=["tester", "pwc_grid_1_rank", "pwc_grid_1_2"
+                                                    , "pwc_grid_2_rank", "pwc_grid_1_w"])
+    df.to_csv ("./rank_result/pairwise_rank_result.csv", index = False, header=True)
+
+
+
+def generate_click_rank(click_rank_files):
     """
     # Data Example
     # "1" & "2": click ranking result
@@ -39,24 +109,27 @@ def generate_general_rank(click_rank_files):
     , 'cali': [1, 1, 1, 0, 1, 1]}
     """
 
-    general_rank_result = []
+    click_rank_result = []
     for file_name in click_rank_files:
         tester = file_name.split("_")[0]
         with open(data_path + "/" + file_name) as fi:
             data = eval(fi.readlines()[1])
             g1_img_rank = [i.split("/")[-1] for i in data["1"]]
             g2_img_rank = [i.split("/")[-1] for i in data["2"]]
-            general_rank_result.append(tuple([tester] + g1_img_rank + g2_img_rank))
+            click_rank_result.append(tuple([tester, g1_img_rank, g2_img_rank]))
     
-    df = pd.DataFrame(general_rank_result, columns=["tester", "g_g1_1", "g_g1_2", "g_g1_3", "g_g1_4", "g_g1_5", "g_g1_6"
-                                        , "g_g2_1", "g_g2_2", "g_g2_3", "g_g2_4", "g_g2_5", "g_g2_6"])
-    df.to_csv ("./rank_result/general_rank_result.csv", index = False, header=True)
+    df = pd.DataFrame(click_rank_result, columns=["tester", "click_grid_1_rank", "click_grid_2_rank"])
+    df.to_csv ("./rank_result/click_rank_result.csv", index = False, header=True)
 
 
 if __name__ == "__main__":
     data_path = "./data"
-    # find click_rank.csv
+
+    # click rank
     click_rank_files = [f for f in os.listdir(data_path) if "click_rank" in f]
-    generate_general_rank(click_rank_files)
-    
+    generate_click_rank(click_rank_files)
+
+    # general rank
+    pairwise_rank_files = [f for f in os.listdir(data_path) if "pairwise_rank" in f]
+    generate_pairwise_rank(pairwise_rank_files)
         
