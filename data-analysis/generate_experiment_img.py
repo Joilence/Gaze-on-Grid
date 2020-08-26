@@ -4,13 +4,6 @@ from PIL import Image, ImageOps
 import os
 import random
 
-
-
-data_path = "./data"
-
-# find click_rank.csv
-click_rank_files = [f for f in os.listdir(data_path) if "click_rank" in f]
-
 def get_grid_image_order(file_name):
     """
     # Data Example
@@ -93,5 +86,9 @@ def generate_grid_iamge(tester_and_orders):
 
 
 if __name__ == "__main__":
+    data_path = "./data"
+    # find click_rank.csv
+    click_rank_files = [f for f in os.listdir(data_path) if "click_rank" in f]
+
     for file_name in click_rank_files:
         generate_grid_iamge(get_grid_image_order(file_name))
