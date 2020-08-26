@@ -68,7 +68,7 @@ def generate_grid_iamge(tester_and_orders):
             loc = (((pos_order % 3) * block_size[0], int(pos_order / 3) * block_size[1]))
             grid_image.paste(fromImge, loc)
 
-        grid_image.save("./exp-img/" + tester + "_gird_" + str(grid_idx+1) +".jpg")
+        grid_image.save("./exp-img/" + tester + "_grid_" + str(grid_idx+1) +".jpg")
 
 
     tester, g1_img_order, g2_img_order = tester_and_orders
