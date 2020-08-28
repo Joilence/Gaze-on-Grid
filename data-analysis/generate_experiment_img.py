@@ -4,7 +4,7 @@ from PIL import Image, ImageOps
 import os
 import random
 
-def get_grid_image_order(file_name):
+def get_grid_image_order(data_path, file_name):
     """
     # Data Example
     # "1" & "2": click ranking result
@@ -68,7 +68,7 @@ def generate_grid_iamge(tester_and_orders):
             loc = (((pos_order % 3) * block_size[0], int(pos_order / 3) * block_size[1]))
             grid_image.paste(fromImge, loc)
 
-        grid_image.save("./exp-img/" + tester + "_gird_" + str(grid_idx+1) +".jpg")
+        grid_image.save("./exp-img/" + tester + "_grid_" + str(grid_idx+1) +".jpg")
 
 
     tester, g1_img_order, g2_img_order = tester_and_orders
@@ -91,4 +91,4 @@ if __name__ == "__main__":
     click_rank_files = [f for f in os.listdir(data_path) if "click_rank" in f]
 
     for file_name in click_rank_files:
-        generate_grid_iamge(get_grid_image_order(file_name))
+        generate_grid_iamge(get_grid_image_order(data_path, file_name))
