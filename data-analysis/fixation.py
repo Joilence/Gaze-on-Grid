@@ -60,3 +60,4 @@ def generate_IVT_fixation(data, v_th, d_th=0, xn='GazeX', yn='GazeY'):
             start = 0
             
     return fixations
+    
