@@ -180,4 +180,4 @@ def grid_based_plot(data, v_th=0.5, d_th=300, xn='GazeX', yn='GazeY', background
                     size=[grid[key]['count'] for key in grid.keys()], sizes=(100, 1000),
                     alpha=0.8, legend=False)
     
-    return ax, grid_based_plot
+    return ax, grid
