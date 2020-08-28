@@ -20,9 +20,9 @@ def generate_pairwise_rank(pairwise_rank_files):
             elif getattr(row, "result") == "right":
                 prefer_image = getattr(row, "right_image").split("/")[-1]
             elif getattr(row, "result") == "not sure":
-                prefer_image = str(getattr(row, "grid")) + "_NS.jpg"
+                prefer_image = str(getattr(row, "grid")) + "_NS"
             elif getattr(row, "result") == "no decision":
-                prefer_image = str(getattr(row, "grid")) + "_ND.jpg"
+                prefer_image = str(getattr(row, "grid")) + "_ND"
 
             duration = getattr(row, "end_timestamp") - getattr(row, "start_timestamp") - 3 # compensation
 
@@ -31,9 +31,9 @@ def generate_pairwise_rank(pairwise_rank_files):
             preference.append((getattr(row, "grid"), prefer_image, weight))
         
         # one image may have different decsion duration, combine all the decision duration for each image
-        # NS and ND just names, do not have such two images
-        g1_image_name_list = ["1_"+ str(i+1) +".jpg" for i in range(image_num_per_grid)] + ["1_NS.jpg", "1_ND.jpg"] 
-        g2_image_name_list = ["2_"+ str(i+1) +".jpg" for i in range(image_num_per_grid)] + ["2_NS.jpg", "2_ND.jpg"]
+        # NS and ND are just names, do not have such two images
+        g1_image_name_list = ["1_"+ str(i+1) +".jpg" for i in range(image_num_per_grid)] + ["1_NS", "1_ND"] 
+        g2_image_name_list = ["2_"+ str(i+1) +".jpg" for i in range(image_num_per_grid)] + ["2_NS", "2_ND"]
         image_name_list = g1_image_name_list + g2_image_name_list
 
         preference_pd = pd.DataFrame(preference)
