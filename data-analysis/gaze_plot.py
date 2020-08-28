@@ -70,7 +70,7 @@ def grid_based_plot(data, v_th=0.5, d_th=300, xn='GazeX', yn='GazeY', background
         print('No fixation detected.')
         return plt.axes()
 
-    # plt.axis('off')
+    plt.axis('off')
 
     # fixation point
     ax = sns.scatterplot(x=fixations_points[:, 0], y=fixations_points[:, 1],
