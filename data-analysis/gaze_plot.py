@@ -25,7 +25,7 @@ def fixation_based_plot(data, v_th=0.5, d_th=300, xn='GazeX', yn='GazeY', backgr
 
     # background image
     if background is not None:
-        plt.imshow(background, zorder=0, alpha=0.5,
+        plt.imshow(background, zorder=0, alpha=1,
                 aspect=ax.get_aspect(),
                 extent=ax.get_xlim() + ax.get_ylim())
 
@@ -78,7 +78,7 @@ def grid_based_plot(data, v_th=0.5, d_th=300, xn='GazeX', yn='GazeY', background
 
     # background image
     if background is not None:
-        plt.imshow(background, zorder=0, alpha=0.5,
+        plt.imshow(background, zorder=0, alpha=1,
                 aspect=ax.get_aspect(),
                 extent=ax.get_xlim() + ax.get_ylim())
 
@@ -143,41 +143,23 @@ def grid_based_plot(data, v_th=0.5, d_th=300, xn='GazeX', yn='GazeY', background
 
     # draw scan path
     arrow_style = mpatches.ArrowStyle.CurveFilledB(head_length=10, head_width=5)
-    if (False):
-        # - grid based
-        for i, rect in enumerate(fixation_rects):
-            if i + 1 == len(fixation_rects): break
-
-            nex_rect = fixation_rects[i+1]
-            cur = grid[rect]['pos']
-            nex = grid[nex_rect]['pos']
-            # print('cur: ', cur, 'nex: ', nex)
-
-            arrow = mpatches.FancyArrowPatch((cur[0], cur[1]), (nex[0], nex[1]), arrowstyle=arrow_style, alpha=0.5)
-            ax.add_patch(arrow)
-            # annotation of order
-            x_anno = (cur[0] + nex[0])/2
-            y_anno = (cur[1] + nex[1])/2
-            b_props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
-            plt.text(x=x_anno, y=y_anno, s=i+1, backgroundcolor='white', bbox=b_props, size=7)
-    else:
-        # - fixation based
-        for i, f in enumerate(fixations_points):
-            # if i == 3: break
-            if i + 1 == len(fixations): break
-            nex = fixations_points[i+1]
-            cur = fixations_points[i]
-            arrow = mpatches.FancyArrowPatch((cur[0], cur[1]), (nex[0], nex[1]), arrowstyle=arrow_style, alpha=0.3)
-            ax.add_patch(arrow)
-            # annotation of order
-            x_anno = (cur[0] + nex[0])/2
-            y_anno = (cur[1] + nex[1])/2
-            b_props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
-            plt.text(x=x_anno, y=y_anno, s=i+1, backgroundcolor='white', bbox=b_props, size=7, zorder=10, alpha=0.3)
+    # - fixation based
+    for i, f in enumerate(fixations_points):
+        # if i == 3: break
+        if i + 1 == len(fixations): break
+        nex = fixations_points[i+1]
+        cur = fixations_points[i]
+        arrow = mpatches.FancyArrowPatch((cur[0], cur[1]), (nex[0], nex[1]), arrowstyle=arrow_style, alpha=0.3)
+        ax.add_patch(arrow)
+        # annotation of order
+        x_anno = (cur[0] + nex[0])/2
+        y_anno = (cur[1] + nex[1])/2
+        b_props = dict(boxstyle='round', facecolor='wheat', alpha=0.8)
+        plt.text(x=x_anno, y=y_anno, s=i+1, backgroundcolor='white', bbox=b_props, size=9, zorder=10, alpha=0.8)
 
     sns.scatterplot(x=[grid[key]['pos'][0] for key in grid.keys()],
                     y=[grid[key]['pos'][1] for key in grid.keys()],
                     size=[grid[key]['count'] for key in grid.keys()], sizes=(100, 1000),
-                    alpha=0.8, legend=False)
+                    alpha=0.4, legend=False)
     
     return ax, grid
