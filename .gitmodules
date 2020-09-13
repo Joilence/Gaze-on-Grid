@@ -1,3 +1,6 @@
 [submodule "experiment-interface"]
 	path = experiment-interface
 	url = https://github.com/angchen-dev/EyeTracking_Interface.git
+[submodule "image-crawler"]
+	path = image-crawler
+	url = https://github.com/Joilence/Zalando-Image-Crawler.git
