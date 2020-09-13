@@ -1,6 +1,6 @@
 # Gaze on Grid
 
-An eye-tracking project based on GazeCloud.
+An eye-tracking project based on [GazeCloudAPI](https://gazerecorder.com/gazecloudapi/).
 
 # Component
 
@@ -14,7 +14,7 @@ Images are downloaded from [Zalando Germany](zalando.de) by Scrapy.
 
 dir: `experiment-interface`
 
-Eye tracking is conducted by web and GazeCloud.
+Eye tracking is conducted by web and [GazeCloudAPI](https://gazerecorder.com/gazecloudapi/).
 
 ## Data Analysis
 
